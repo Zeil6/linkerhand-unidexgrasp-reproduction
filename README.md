@@ -61,7 +61,12 @@ CHECKPOINT=/absolute/path/to/model.pt bash scripts/test_checkpoint.sh state
 
 > 不同上游提交的 CLI 可能变化。脚本会先检查路径；测试脚本不会猜测未知 checkpoint 参数。
 
-## 关键故障
+## 我真正解决过的关键故障
+
+> [查看完整复现过程与 11 类失败的逐项复盘 →](docs/full_reproduction_retrospective.md)
+
+其中包含实际遇到的 `torch_sparse cp38 wheel` 不兼容、Python 被切换为 GraalVM、`Failed to load PyTorch C extensions (torch/_C)`、RTX 4090 与旧 CUDA 栈、CSDF/PointNet2 编译、Isaac Gym/gymtorch、`Graphics is nullptr`、tensor 类型和模型路径问题。每项均按“现象 → 根因 → 排查 → 修复 → 可迁移经验”展开。
+
 
 | 现象 | 根因 | 修复 | 可迁移经验 |
 |---|---|---|---|
@@ -82,6 +87,8 @@ CHECKPOINT=/absolute/path/to/model.pt bash scripts/test_checkpoint.sh state
 
 ## 文档导航
 
+- [完整复现与失败复盘（建议优先阅读）](docs/full_reproduction_retrospective.md)
+- [从复现中形成的工程思考](docs/engineering_insights.md)
 - [项目架构](docs/architecture.md)
 - [完整复现流程](docs/reproduction_pipeline.md)
 - [PPO 核心流程](docs/ppo_pipeline.md)
