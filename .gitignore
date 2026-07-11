@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+
+# Environments
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Native builds
+build/
+dist/
+*.o
+*.a
+CMakeFiles/
+
+# Logs and experiment output
+logs/
+runs/
+outputs/
+wandb/
+events.out.tfevents*
+
+# Models and large data
+*.pt
+*.pth
+*.ckpt
+*.onnx
+data/
+datasets/
+assets/**/*.obj
+assets/**/*.urdf.tmp
+
+# Cache
+*.cache
+.cache/
+torch_extensions/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*
+secrets*
+
+# Editors and OS
+.idea/
+.vscode/
+.DS_Store
+
+# Keep curated portfolio media only
+!assets/
+!assets/**/README.md
+!assets/images/
+!assets/demo/
+!assets/tensorboard/
