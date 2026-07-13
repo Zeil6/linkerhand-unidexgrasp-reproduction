@@ -1,11 +1,14 @@
-# 展示素材说明
+# 实验素材记录规则
 
-当前分支尚未收到个人截图、TensorBoard 曲线和 Demo 视频，因此不放置占位假图。
+当前目录只用于保存能够与具体实验对应的小型截图、曲线图片和演示片段，不放置没有上下文的占位图。
 
-建议目录：
+我保存素材时会同时记录：
 
-- `images/`：运行界面、generation 输出、Isaac Gym 可视化。
-- `tensorboard/`：reward、episode length、value loss、surrogate loss 等精选曲线截图。
-- `demo/`：15–60 秒核心流程演示，或 README 中使用外部视频链接。
+- 日期与仓库 commit。
+- task 和 YAML 配置。
+- 对象列表。
+- checkpoint 来源。
+- 启动命令。
+- 图中能够支持的结论和不能支持的结论。
 
-每份素材应在文件名或相邻说明中标注日期、任务、配置与 checkpoint。提交前删除终端中的 IP、用户名、Token 和服务器路径。
+原始 TensorBoard event、大型视频、数据集和权重不提交到 Git。终端截图需要先检查用户名、IP、Token 和服务器绝对路径。

@@ -1,43 +1,46 @@
-# 项目架构
+# 我对项目结构的理解
 
-上游工程可分为抓取生成与策略执行两条主线。本仓库只维护复现说明、脚本和证据索引，不复制上游大体积源码。
+我最开始把仓库看成一套可以直接运行的灵巧手强化学习代码。实际阅读后，我发现它由抓取生成和策略执行两条相互依赖、但数据含义不同的链路组成。
 
 ```mermaid
 flowchart TD
     A[dexgrasp_generation_forlinker] --> B[Grasp candidates]
-    B --> C[Converted grasp assets]
+    B --> C[Converted grasp data and assets]
     C --> D[dexgrasp_policy_l20hand]
     D --> E[Isaac Gym tasks]
-    E --> F[PPO actor-critic]
-    F --> G[Checkpoint and visualization]
+    E --> F[PPO or DAgger]
+    F --> G[Checkpoint and test]
 ```
 
-## Generation 层
+## 抓取生成部分
+
+我把 generation 部分理解为：根据物体几何和手模型，产生可以作为后续训练先验或目标的数据。
 
 - `network/train.py`：GraspIPDF、GraspGlow、ContactNet 等训练入口。
 - `network/eval.py`：抓取候选评估入口。
-- `thirdparty/CSDF`：几何距离场相关能力。
+- `thirdparty/CSDF`：几何距离相关计算。
 - `thirdparty/pytorch_kinematics`：运动学计算。
-- `data/DFCdata` 与 `data/mjcf`：抓取标签和手模型资产。
+- `DFCdata`、MJCF 和 mesh：抓取标签、机器人与物体资产。
 
-## Policy 层
+这部分最容易被忽略的是数据语义。即使文件名相同，关节顺序、坐标系或 scale 定义不同，也不能直接送入 policy task。
 
-- `dexgrasp/tasks/`：状态、奖励、终止条件、物体加载与仿真交互。
-- `dexgrasp/algorithms/rl/ppo/`：actor–critic、rollout storage 与 PPO 更新。
-- `dexgrasp/utils/`：配置解析、task 创建和算法装配。
-- `dexgrasp/script/`：state PPO、vision PPO 与 DAgger 的命令入口。
+## 策略执行部分
 
-## 数据与控制关系
+- `dexgrasp/tasks/`：构造 observation、action、reward、reset 和物体加载。
+- `dexgrasp/algorithms/rl/ppo/`：actor–critic、rollout storage 和 PPO 更新。
+- `dexgrasp/algorithms/rl/dagger/`：学生策略与状态专家的模仿路径。
+- `dexgrasp/utils/`：配置解析、task 创建和算法实例化。
+- `dexgrasp/script/`：state PPO、vision PPO 和 DAgger 启动入口。
 
-| 对象 | 作用 | 常见风险 |
-|---|---|---|
-| object asset | 构建仿真物体 | 路径、scale、碰撞模型不一致 |
-| grasp pose / joints | 提供目标抓取状态 | 坐标系和关节顺序不一致 |
-| observation | 策略输入 | 维度、dtype、device 不一致 |
-| action | 控制关节目标 | action scale 与关节限制不一致 |
-| reward | 定义学习目标 | 奖励尺度或稀疏性导致训练不稳定 |
-| checkpoint | 保存网络参数 | 网络结构和配置不匹配 |
+## 我后来建立的对应关系
 
-## 上游与个人工作的边界
+| 对象 | 我会检查什么 |
+|---|---|
+| object asset | object code、mesh、scale、碰撞与纹理路径 |
+| grasp data | key、shape、dtype、坐标系和关节顺序 |
+| observation | 配置维度与实际 tensor 是否相同 |
+| action | 维度、动作缩放与机器人受控自由度 |
+| reward/reset | 是否与任务目标一致，mask 类型是否正确 |
+| checkpoint | 模型结构、输入输出、task 配置和代码版本 |
 
-算法实现、任务环境和模型结构来自上游；个人工作的价值主要体现在环境兼容、端到端集成、问题定位、流程验证和复盘文档。
+这一步让我意识到，checkpoint 不是独立成果，而是整套实验上下文中的一个文件。
