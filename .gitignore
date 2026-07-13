@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+
+# Environments
+.venv/
+venv/
+env/
+.conda/
+
+# Native builds
+build/
+dist/
+*.o
+*.a
+CMakeFiles/
+torch_extensions/
+.cache/
+
+# Logs and experiment outputs
+logs/
+runs/
+outputs/
+wandb/
+events.out.tfevents*
+*.log
+
+# Checkpoints and serialized models
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.pkl
+*.pickle
+
+# Large datasets and generated assets
+data/
+dataset*/
+datasets/
+meshdata*/
+DFCdata/
+assets/**/*.obj
+assets/**/*.stl
+assets/**/*.ply
+
+# Archives and backups
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.bak
+*.backup
+*~
+
+# Secrets and local machine configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*
+secrets*
+*.token
+
+# Editors and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Curated small documentation assets may be committed
+!assets/
+!assets/**/README.md
+!assets/images/
+!assets/demo/
+!assets/tensorboard/
