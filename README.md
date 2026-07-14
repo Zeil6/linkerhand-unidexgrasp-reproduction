@@ -20,11 +20,17 @@
 
 ## 3. 官方模型运行演示
 
-[▶ 查看官方模型抓取演示视频](assets/demo/official_model_grasp_demo.mp4)
+下面的 GIF 截取自完整视频最后约 5 秒（约 00:33–00:38），用于直接观察抓取结束阶段：
+
+![官方模型抓取演示最后几秒](assets/demo/official_model_demo_last_seconds.gif)
+
+点击封面可以查看完整视频：
+
+[![官方模型抓取演示封面](assets/demo/official_model_demo_cover.jpg)](assets/demo/official_model_grasp_demo.mp4)
 
 这段视频是我完成官方模型运行链路后录制的实际画面，时长约 38 秒。它记录的是官方 ShadowHand 模型相关任务的运行结果，不是我的 LinkerHand L20 PPO 模型，也不能单独用来证明论文成功率或 benchmark。
 
-视频信息：H.264、1920×1080、20 FPS，文件大小约 6.8 MB。
+完整视频：H.264、1920×1080、20 FPS，文件大小约 6.8 MB。GIF 为 640×360、10 FPS。
 
 ## 4. 我的 L20 训练链路
 
